@@ -2,15 +2,53 @@
 
 <script src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
 
-<div id="app">
-    
+<div id="app" >
+	<input v-model="myfontsize" type="number" @change="updateFontSize"/>
+	<div :style="{ border: 'solid 1px', padding: '0 4px', marginBottom: '24px', fontSize: myfontsize + 'px' }">
+		<h1>{{ msg }}</h1>
+	</div>
+	<div :style="fancyDiv" @mouseover="handleMouseOver" @mouseout="handleMouseOut">
+		<h1>{{ msg }}</h1>
+	</div>
+	<div  :style="[fancyDiv, fancierDiv]" @mouseover="handleMouseOver" @mouseout="handleMouseOut">
+		<h1>{{ msg }}</h1>
+	</div>
 </div>
 
+
 <script>
-    new Vue({
-       el: '#app',
-       data: {
-           
-       }
-    });
+const vm = new Vue({
+	el: '#app',
+	data: {
+		msg: 'Hello world',
+		myfontsize: 10,
+		fancyDiv: {
+			fontSize: '10px',
+			color: '#bada55',
+			border: 'solid 1px green',
+			borderRadius: '10px',
+			padding: '8px 24px',
+			marginBottom: '24px',
+		},
+		fancierDiv: {
+			'box-shadow': '0 2px 8px rgba(0,0,0,0.6)',
+			'borderWidth': '8px',
+		},
+	},
+	methods: {
+		handleMouseOver(e) {
+			// changing the class styles will update ALL elements using it
+			// this.fancyDiv.color = 'red'
+			// instead change that elements style  (or add hover class?)
+			e.target.style.color = 'black'
+		},
+		handleMouseOut(e) {
+			// don't forget to reset on mouseout!
+			e.target.style.color = '#bada55'
+		},
+		updateFontSize(e) {
+			this.fancyDiv.fontSize = `${this.myfontsize}px`
+		}
+	},
+})
 </script>

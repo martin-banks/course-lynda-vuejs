@@ -3,33 +3,44 @@
 <script type="text/javascript" src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
 
 <div id="app">
+    <div :class="{ square: true, blue: true }"></div>
+    <div class="square" :class="{ 'dashed-border': true, blue: false }"></div>
+    <hr />
+    <input type="text" v-model="color">
+    <div class="square" :class="{ 'dashed-border': true, blue: false, [color]: true }"></div>
+    <hr />
+    <input type="text" v-model="bgCol">
+    <div class="square" :class="[bgCol, dashed]"></div>
 </div>
 
 <script>
     var vm = new Vue({
-       el: '#app',
-       data: {
-           
-       }
-    });
+     el: '#app',
+     data: {
+        testDash: 'dashed-border',
+        color: '',
+        bgCol: 'red',
+        dashed: 'dashed-border',
+    }
+});
 </script>
 
 <style>
-    .square {
-         width: 200px;
-         height: 200px;
-         margin-bottom: 20px;
-    }
-    .blue {
-        background-color: blue;
-    }
-    .red {
-        background-color: red;
-    }
-	.yellow {
-        background-color: yellow;
-    }
-    .dashed-border {
-        border: dashed 4px black;
-    }
+.square {
+   width: 200px;
+   height: 200px;
+   margin-bottom: 20px;
+}
+.blue {
+    background-color: blue;
+}
+.red {
+    background-color: red;
+}
+.yellow {
+    background-color: yellow;
+}
+.dashed-border {
+    border: dashed 4px black;
+}
 </style>

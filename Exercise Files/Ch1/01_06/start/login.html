@@ -114,7 +114,16 @@
 <script type="text/javascript" src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
 
 <div id="app">    
-	<button>Log in</button>        
+    <!-- 
+        @ is shorthand for v-on
+        click events send an event parameters or can be manually passed with $event
+        other parameters can be passed into the function
+        using v-if is a convenient way to change layout states (login / logout buttons)
+     -->
+<form action="">
+    <button v-if="!loggedIn" @click="login($event, 'mike')">Log in</button>
+	<button v-else @click.prevent="logout($event)">Log out</button>
+</form>      
 	{{msg}}    
 </div>
 
@@ -122,8 +131,21 @@
     new Vue({
        el: '#app',
        data: {
-           msg: ''           
-       }
+           msg: '',
+           loggedIn: false,
+       },
+       methods: {
+        login(e, name) {
+            e.preventDefault()
+            this.loggedIn = !this.loggedIn
+            this.msg = `Hi there ${name}`
+        },
+        logout(e) {
+            console.log(e)
+            this.loggedIn = !this.loggedIn
+            this.msg = 'Goodbye'
+        },
+       },
     });
 </script>
         

@@ -118,19 +118,35 @@
 		<label for="email">Email</label> <input type="email" v-model.lazy="email" id="email">
 		<fieldset>
 			<legend>Interests</legend>
-			<div>
-				<input type="checkbox" v-model="selectedInterests" value="Running"> Running
+			<div v-for="(interest, index) in interests">
+				<input type="checkbox" v-model="selectedInterests" :value="interest.id">{{ index }}. {{ interest.name }}
 			</div>
-			<div>
-				<input type="checkbox" v-model="selectedInterests" value="Cycling"> Cycling
-			</div>
-			<div>
-				<input type="checkbox" v-model="selectedInterests" value="Swimming"> Swimming
-			</div>
+
 		</fieldset>
 		<input type="submit" value="Subscribe">
 		<!--<p>You entered {{email}}.</p>-->
-		<p>You selected: {{selectedInterests.join(', ')}}</p>
+        <!-- using v-show sets the visibility depending on the condition -->
+        <!-- v-if will only render the condition is true -->
+        <p v-if="selectedInterests.length === 3">You selected everything!!</p>
+		<p v-else-if="selectedInterests.length">You selected: {{ selectedInterests.join(', ') }}</p>
+        <p v-else>Please select and interest</p>
+        
+        <!-- v-for can also be used to loop over objects, 3 props are exposed -->
+        <p v-for="(value, key, index) in place">
+            <!-- <span v-for="(vValue, vKey) in value"> -->
+                {{ key }}: {{ value }}
+            <!-- </span> -->
+        </p>
+        <!-- can be nested to loop over array of objects -->
+        <p v-for="(value, key) in interests">
+            <span v-for="(v, k) in value">
+                {{ k }}: {{ v }} / 
+            </span>
+        </p>
+        <!-- or loop uo to an integer, 1 indexed (not 0) -->
+        <ul>
+            <li v-for="i in 10">{{ i }}. List item</li>
+        </ul>
 	</form>
 </div>
 
@@ -139,8 +155,26 @@
 	   el: '#app',
 	   data: {
 		   email: '',
-		   selectedInterests: ['Running', 'Swimming']
-	   }
+           interests: [
+               {
+                    id: 'first',
+                    name: 'Running',
+                },
+                {
+                    id: 'second',
+                    name: 'Swimming',
+                },
+                {
+                    id: 'third',
+                    name: 'Cycling',
+                }
+            ],
+		   selectedInterests: [],
+           place: {
+                first: 'hello',
+                second: 'world',
+           },
+       },
 	});
 </script>
         
