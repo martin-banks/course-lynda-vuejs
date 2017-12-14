@@ -2,15 +2,37 @@
 
 <script type="text/javascript" src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
 <div id="app">
-    {{firstName}} {{lastName}}
+    <p>
+	    {{firstName}} {{lastName}}
+    </p>
+    <input type="text" v-model="firstName" />
+    <p>
+    	{{ fullName }}
+    </p>
 </div>
 
 <script>
-    var vm = new Vue({
-        el: '#app',
-        data: {
-            firstName: 'Mike',
-            lastName: 'Sullivan'
-       }
-    });
+/*eslint-disable*/
+var vm = new Vue({
+	el: '#app',
+	data: {
+		firstName: 'Mike',
+		lastName: 'Sullivan'
+	},
+	computed: {
+		// Computed will only run when the values of it's dependancies change
+		// If nothing has changed the function will not run and the same, cached value will be returned
+		fullName() {
+			console.log('setting ... ')
+			return `${this.firstName} ${this.lastName}`
+		}
+	},
+	methods: {
+		// Creating a method will run the function every time it is called
+		fullNameFunc() {
+			console.log('setting ... ')
+			return `${this.firstName} ${this.lastName}`
+		}
+	}
+});
 </script>

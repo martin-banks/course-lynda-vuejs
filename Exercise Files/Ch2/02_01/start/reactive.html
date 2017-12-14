@@ -6,13 +6,30 @@
     <p>
         {{firstName}} {{lastName}}
     </p>
+    <ul>
+    	<li v-for="detail in browser">{{ detail }}</li>
+    </ul>
 </div>
 
 <script>
-    var vm = new Vue({
-       el: '#app',
-       data: {
-            firstName: 'Mike'
-       }
-    });
+/*eslint-disable*/
+var vm = new Vue({
+  el: '#app',
+  data: {
+    firstName: 'Mike',
+    lastName: '',
+    browser: {
+    	name: 'Chrome'
+    }
+  }
+});
+
+/*
+new top level data entries cannot be created dynamically, 
+they must already exist (even if they are empty) and then updated
+*/
+vm.lastName = 'smith'
+
+// new items can be created inside of data objects using Vue.set
+Vue.set(vm.browser, 'version', 55)
 </script>
