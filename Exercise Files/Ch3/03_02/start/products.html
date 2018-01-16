@@ -114,16 +114,45 @@
 <script type="text/javascript" src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
 
 <div id="app">
-    
+    <product-list title="List of stuff" :products="theProducts"></product-list>
 </div>
 
 <script>
-    var vm = new Vue({
-        el: '#app',
-        data: {
-        
-        }
-    });
+/*eslint-disable*/
+
+/*
+component attributes are case-INSENSITIVE meaning that a prop of 'theTitle' cannot be used. 
+ALWAYS used kebab-case or snake_case
+Text can be passed in as a prop, but attributes must be bound to use data
+
+In the created lifecyccle hook, this.theProducts can only be used with arrow functions (doesn't restrict scope to the function)
+Otherwise for traditional function() expressions, use vm.theProducts
+*/
+
+Vue.component('product-list', {
+    template: `
+        <div class="product-list">
+            <h2>{{ title }}</h2>
+            <ul>
+                <li v-for="product in products">
+                    <img :src="product.image" alt="" />
+                    <p>{{ product.name }}</p>
+                    <p>{{ product.description }}</p>
+                </li>
+            </ul>
+        </div>`,
+    props: [ 'title', 'products' ]
+})
+var vm = new Vue({
+    el: '#app',
+    data: {
+        theProducts: [{ name: 'Fetching products ...' }]
+    },
+    created() {
+        $.getJSON('https://hplussport.com/api/products')
+            .done(data => this.theProducts = data)
+    }
+});
 </script>
 
 <style>
