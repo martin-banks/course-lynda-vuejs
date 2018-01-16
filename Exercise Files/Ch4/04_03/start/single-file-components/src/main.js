@@ -1,7 +1,31 @@
 import Vue from 'vue'
+import VueRouter from 'vue-router'
 import App from './App.vue'
 
+import ProductList from './ProductList.vue'
+import Product from './Product.vue'
+
+Vue.use(VueRouter)
+
+const routes = [
+	{
+		path: '/',
+		redirect: '/products',
+	},
+	{
+		path: '/products',
+		component: ProductList,
+	},
+	{
+		path: '/product/:id',
+		component: Product,
+	},
+]
+
+const router = new VueRouter({ routes })
+
 new Vue({
-  el: '#app',
-  render: h => h(App)
+	el: '#app',
+	router,
+	render: h => h(App),
 })
